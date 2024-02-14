@@ -1,32 +1,35 @@
 import React from 'react'
-import  ReactDOM  from 'react-dom'
-import {BrowserRouter as Router, Routes, Route} from'react-router-dom'
+import ReactDOM from 'react-dom'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
-import Header from './components/Header/index';
 import Survey from './pages/Survey'
-import ClientForm from './components/ClientForm/index';
-import FreelanceForm from './components/FreelanceForm/index';
-import Error from './components/Error/index';
-import Freelances from './pages/Freelances/index';
-import Results from './pages/Results/index';
+import Results from './pages/Results'
+import Freelances from './pages/Freelances'
+import Header from './components/Header'
+import Footer from './components/Footer'
+import Error from './components/Error'
+import GlobalStyle from './utils/style/GlobalStyle'
+import { ThemeProvider } from './utils/context'
+import { SurveyProvider } from './utils/context'
+
 ReactDOM.render(
   <React.StrictMode>
-
     <Router>
-      <Header/>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/survey/:questionNumbers" element = {<Survey />}>
-          <Route path="client" element={<ClientForm />} />
-          <Route path="freelance" element={<FreelanceForm />} />
-
-        </Route>
-        <Route path="*" element={<Error />} />
-        <Route path = "/freelances" element = {<Freelances />} />
-        <Route path="/Results" element = {<Results />} />
-      </Routes>
-  
+      <ThemeProvider>
+        <SurveyProvider>
+          <GlobalStyle />
+          <Header />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/survey/:questionNumber" element={<Survey />} />
+            <Route path="/results" element={<Results />} />
+            <Route path="/freelances" element={<Freelances />} />
+            <Route path="*" element={<Error />} />
+          </Routes>
+        </SurveyProvider>
+        <Footer />
+      </ThemeProvider>
     </Router>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById('root'),
 )
